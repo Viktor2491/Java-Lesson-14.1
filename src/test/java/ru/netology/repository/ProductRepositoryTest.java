@@ -65,7 +65,7 @@ public class ProductRepositoryTest {
     @Test
     //удаление по ид
     public void shouldRemoveProductById() {
-        repo.removeProductById(1);
+        repo.removeProductById (1);
         Product[] expected = {book2, book3, smartphone1, smartphone2};
         Product[] actual = repo.getProducts();
         Assertions.assertArrayEquals(expected, actual);
