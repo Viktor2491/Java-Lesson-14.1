@@ -5,13 +5,19 @@ import ru.netology.domain.Product;
 public class ProductRepository {
     Product[] products = new Product[0];
 
-    public void save(Product product) {
+    public void save(Product productForAdd) {
+        Product product1 = findById(productForAdd.getId());
+        if(product1 != null){
+            throw new AlreadyExistsException(
+                    "Element with id: " + productForAdd.getId() + " already exists"
+            );
+        }
 
         Product[] tmp = new Product[products.length + 1];
         for (int i = 0; i < products.length; i++) {
             tmp[i] = products[i];
         }
-        tmp[tmp.length - 1] = product;
+        tmp[tmp.length - 1] = productForAdd;
         products = tmp;
     }
 
@@ -20,7 +26,9 @@ public class ProductRepository {
     }
 
     public void removeProductById(int id) {
-        if(id < 0){
+        Product product2 = findById(id);
+
+        if(product2 == null){
             throw new NotFoundException(
                     "Element with id: " + id + " not found"
             );
@@ -43,6 +51,9 @@ public class ProductRepository {
             }
         }
         return null;
+    }
+    public Product[] getSavedProducts () {
+        return products;
     }
 
 }

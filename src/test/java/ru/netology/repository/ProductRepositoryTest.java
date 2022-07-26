@@ -79,5 +79,20 @@ public class ProductRepositoryTest {
         });
     }
 
+    @Test
+    //добавление продукта по ид
+    public void shouldAddProductById() {
+        Product[] expected = {book1, book2, book3, smartphone1, smartphone2};
+        Product[] actual = repo.getSavedProducts();
+        Assertions.assertArrayEquals(expected, actual);
+    }
+    @Test
+    // не должен добавлять с таким же ид
+    public void shouldNotAddSomeId() {
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repo.save(smartphone2);
+        });
+    }
+
 }
 
